@@ -22,6 +22,7 @@
   </div>
 </template>
 <script>
+import { eventBus } from "../main";
 import ProductDetail from "./ProductDetail";
 
 export default {
@@ -32,6 +33,11 @@ export default {
     return {
       productList: []
     };
+  },
+  created() {
+      eventBus.$on("productAdded", (product) => {
+          this.productList.push(product);
+      });
   }
 };
 </script>

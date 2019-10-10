@@ -46,6 +46,8 @@
   </div>
 </template>
 <script>
+import { eventBus } from "../main";
+
 export default {
   data() {
     return {
@@ -65,7 +67,15 @@ export default {
     },
     addProduct() {
       this.product.totalPrice = this.product.productPrice * this.product.productCount;
-      console.log(this.product);
+      //   console.log(this.product);
+      eventBus.$emit("productAdded", this.product);
+      this.product = {
+        productName: null,
+        productCount: null,
+        productPrice: null,
+        totalPrice: null,
+        selectedImage: null
+      };
     }
   }
 };
