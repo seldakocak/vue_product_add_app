@@ -5,19 +5,19 @@
       <div class="card-body">
         <div class="form-group">
           <label>Ürün Adı</label>
-          <input type="text" class="form-control" placeholder />
+          <input type="text" v-model="product.productName" class="form-control" placeholder />
         </div>
         <div class="row">
           <div class="form-group col-md-6">
             <label>Ürün Adeti</label>
-            <input type="text" class="form-control" placeholder />
+            <input type="text" v-model="product.productCount" class="form-control" placeholder />
           </div>
           <div class="form-group col-md-6">
             <label>Ürün Fiyatı</label>
-            <input type="text" class="form-control" placeholder />
+            <input type="text" v-model="product.productPrice" class="form-control" placeholder />
           </div>
         </div>
-        <button class="btn btn-dark btn-block">Ekle</button>
+        <button class="btn btn-dark btn-block" @click="addProduct">Ekle</button>
       </div>
     </div>
     <!-- Product Picture -->
@@ -53,6 +53,7 @@ export default {
         productName: null,
         productCount: null,
         productPrice: null,
+        totalPrice: null,
         selectedImage: null
       }
     };
@@ -61,6 +62,10 @@ export default {
     onChange(e) {
       const file = e.target.files[0];
       this.product.selectedImage = URL.createObjectURL(file);
+    },
+    addProduct() {
+      this.product.totalPrice = this.product.productPrice * this.product.productCount;
+      console.log(this.product);
     }
   }
 };
