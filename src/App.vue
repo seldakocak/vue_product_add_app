@@ -53,7 +53,6 @@ body {
 
 .progress {
   margin: 50px 15px;
-  padding: 15px;
 }
 
 .progress-bar {

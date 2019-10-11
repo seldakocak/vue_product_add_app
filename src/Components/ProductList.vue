@@ -1,24 +1,29 @@
 <template>
-  <div class="row product-container">
-    <app-product-detail v-for="product in productList" :key="product">
-      <div class="card">
-        <div class="card-body">
-          <img class="card-img-top" src="/src/assets/default.png" alt="Card image cap" />
-          <h5 class="card-title">Ürün Adı</h5>
-          <small>
-            <strong>Adet :</strong> 1
-          </small>
-          <br />
-          <small>
-            <strong>Fiyat :</strong> 10
-          </small>
-          <br />
-          <small>
-            <strong>Tutar :</strong> 10
-          </small>
+  <div v-if="productList.length > 0">
+    <div class="row product-container">
+      <app-product-detail v-for="product in productList" :key="product">
+        <div class="card">
+          <div class="card-body">
+            <img class="card-img-top" :src="product.selectedImage" :alt="product.productName" />
+            <h5 class="card-title">Ürün Adı</h5>
+            <small>
+              <strong>Adet :</strong>
+              {{ product.productCount }}
+            </small>
+            <br />
+            <small>
+              <strong>Fiyat :</strong>
+              {{ product.productPrice }}
+            </small>
+            <br />
+            <small>
+              <strong>Tutar :</strong>
+              {{ product.totalPrice }}
+            </small>
+          </div>
         </div>
-      </div>
-    </app-product-detail>
+      </app-product-detail>
+    </div>
   </div>
 </template>
 <script>
@@ -35,9 +40,14 @@ export default {
     };
   },
   created() {
-      eventBus.$on("productAdded", (product) => {
-          this.productList.push(product);
-      });
+    eventBus.$on("productAdded", product => {
+      if (this.productList.length < 2) {
+        this.productList.push(product);
+        eventBus.$emit("progressBarUpdated", this.productList.length);
+      } else {
+        alert("Daha fazla ürün ekleyemezsiniz!");
+      }
+    });
   }
 };
 </script>
